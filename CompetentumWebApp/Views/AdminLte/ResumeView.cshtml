@@ -1,0 +1,121 @@
+﻿@model IEnumerable<CompetentumWebApp.Models.Resume>
+@using CompetentumWebApp.Models
+
+@{
+    ViewBag.Title = "База данных резюме";
+}
+
+<p>
+    @Html.ActionLink("Добавить новое резюме", "Create")
+</p>
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th>
+                ФИО
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender.GenderName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.birth_date)
+            </th>
+           <th>
+                @Html.DisplayNameFor(model => model.CityName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpecializationName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SalaryAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Source.SourceName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.State.StateName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StateDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InterviewDate)
+            </th>
+
+            <th>
+                Связанные вакансии
+            </th>
+            @*нужны связанные вакансии*@
+
+            <th>
+                @Html.DisplayNameFor(model => model.Commentary)
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    
+                    <p>@Html.DisplayFor(modelItem => item.last_name)</p>
+                    <p>@Html.DisplayFor(modelItem => item.first_name)</p> 
+                    <p>@Html.DisplayFor(modelItem => item.middle_name)</p> 
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gender.GenderName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.birth_date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CityName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SpecializationName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SalaryAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Source.SourceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.State.StateName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StateDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InterviewDate)
+                </td>
+
+                <td>
+                    @foreach (Vacancy c in item.Vacancies)
+                    {
+                        @Html.ActionLink(@c.VacancyName, "VacancyDetails", new { id = c.Id })<br />
+                    }
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Commentary)
+                </td>
+                
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+@section scripts {
+    @*NOTE: These should NOT be used in a production situation
+        They do contains useful snippets on how to setup charts*@
+    <script src="~/Scripts/AdminLTE/pages/dashboard2.js"></script>
+    <script src="~/Scripts/AdminLTE/demo.js"></script>
+}
